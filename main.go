@@ -542,7 +542,7 @@ func main() {
 
 	fmt.Println("模拟一下消费者生产者模式")
 	cch := make(chan int)
-	go entity.Consumer(cch)
+	go Consumer(cch)
 	//假设是生产者
 	for i := 1; i < 5; i++ {
 		fmt.Printf("当前通道元素的长度：	%d\n", len(cch))
@@ -589,20 +589,37 @@ func main() {
 	fmt.Println("开启多个分支完成计算任务")
 	wgg.Add(5)
 	he := 0
-	cj := make(chan int, 5)
+	cj := make(chan int, 8)
+	fmt.Println("还没插入元素的时候，通道cj的长度是：", len(cj)) //0
 	for i := 0; i < 10000; {
 		if i%2000 == 0 {
 			go Cal(i, i+1999, cj)
 		}
 		i = i + 2000
 	}
-	for num := range cj {
-		he += num
+	wgg.Wait() //等运算协程都算完再加起各个结果
+	// for xxum := range cj {
+	// 	he += xxum
+	// } //感觉这种方式有问题，还是不用为好，这里用的话死锁了
+
+	for len(cj) > 0 {
+		a := <-cj
+		he += a
 	}
-	wgg.Wait()
+	fmt.Println("计算完后，通道cj的长度是：	", len(cj)) //可以看到即便是由缓存的通道，元素读完后出的也是0 了
+	//看源码可以知道，len取的是元素的长度，不是缓存区的长度，
 	fmt.Println(he)
 }
+func Consumer(ch chan int) { //假装是消费者
+	for { //一直消费
+		data := <-ch
+		if data == 0 {
+			break
+		}
 
+	}
+	ch <- 0 //告诉生产者我知道了你不生产了，那我告诉你我不消费了
+}
 func Cal(start int, end int, ch chan int) { //模拟一个计算任务，计算加一10000次
 	defer wgg.Done()
 	sum := 0
