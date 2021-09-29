@@ -1,4 +1,4 @@
-module github.com/wbing441282413/gotest
+module gotest
 
 go 1.17
 
