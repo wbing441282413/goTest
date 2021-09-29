@@ -14,3 +14,8 @@ func index(w http.ResponseWriter, r *http.Request) {
 	//fmt.Fprintf(w,"你好首页")
 	w.Write([]byte("你好"))
 }
+
+
+
+
+

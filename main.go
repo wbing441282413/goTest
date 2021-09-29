@@ -10,6 +10,7 @@ import (
 	"gotest/utils"
 	"io"
 	"log"
+	"math/rand"
 	"os"
 	"reflect"
 	"runtime"
@@ -536,6 +537,142 @@ func main() {
 			break
 		}
 	}
+
+	// utils.RedisOps()
+
+	fmt.Println("模拟一下消费者生产者模式")
+	cch := make(chan int)
+	go entity.Consumer(cch)
+	//假设是生产者
+	for i := 1; i < 5; i++ {
+		fmt.Printf("当前通道元素的长度：	%d\n", len(cch))
+		time.Sleep(time.Second)
+		cch <- i
+	}
+
+	cch <- 0 //生产者传入0，告知消费者，不再生产了
+	<-cch    //这里是必须要消费的,否则消费者传的结束信息不被消费会一直等待
+
+	fmt.Println("到底非缓冲通道中是不是只有一个元素")
+	kk := make(chan int)
+	go dudu(kk)
+	kk <- 0
+	// <-kk //会报错，同一个协程不能自己发自己收
+
+	// fmt.Println("通道的只读和只写")
+	// jk := make(chan<- int) //<-chan int就是只读的通道
+	// jk <- 0
+	// <- jk //会提示错误，只写通道不能读
+	// fmt.Println(len(jk))
+
+	//无缓冲通道实现打乒乓球
+	court := make(chan int) //模拟比赛
+	wgg.Add(2)
+	go Player(court, "马龙")
+	go Player(court, "樊振东")
+
+	court <- 1 //发球，比赛开始
+	wgg.Wait()
+
+	//无缓冲通道模拟接力跑
+	// 创建一个无缓冲的通道
+	baton := make(chan int)
+	// 为最后一位跑步者将计数加1
+	wgg.Add(1)
+	// 第一位跑步者持有接力棒
+	go Runner(baton)
+	// 开始比赛
+	baton <- 1
+	// 等待比赛结束
+	wgg.Wait()
+
+	fmt.Println("开启多个分支完成计算任务")
+	wgg.Add(5)
+	he := 0
+	cj := make(chan int, 5)
+	for i := 0; i < 10000; {
+		if i%2000 == 0 {
+			go Cal(i, i+1999, cj)
+		}
+		i = i + 2000
+	}
+	for num := range cj {
+		he += num
+	}
+	wgg.Wait()
+	fmt.Println(he)
+}
+
+func Cal(start int, end int, ch chan int) { //模拟一个计算任务，计算加一10000次
+	defer wgg.Done()
+	sum := 0
+	for i := start; i <= end; i++ {
+		sum += 1
+	}
+	ch <- sum
+	fmt.Println("本协程的计算结果是：	", sum)
+	fmt.Println("通道元素长度：	", len(ch))
+}
+
+func Player(ch chan int, name string) {
+	defer wgg.Done()
+
+	for {
+		ball, ok := <-ch
+		if !ok { //通道被关闭，也就是对手关闭了通道，我们赢了
+			fmt.Printf("%s 赢了\n", name)
+			return
+		}
+
+		i := rand.Intn(100)
+		if i%13 == 0 { //模拟失球
+			fmt.Printf("%s 输了\n", name)
+			close(ch)
+			return
+		}
+		fmt.Printf("%s ---击球\n", name)
+		ball++
+		ch <- ball //把球打给对手
+	}
+
+}
+
+// Runner 模拟接力比赛中的一位跑步者
+func Runner(baton chan int) {
+	var newRunner int
+	// 等待接力棒
+	runner := <-baton
+	// 开始绕着跑道跑步
+	fmt.Printf("Runner %d Running With Baton\n", runner)
+	// 创建下一位跑步者
+	if runner != 4 {
+		newRunner = runner + 1
+		fmt.Printf("Runner %d To The Line\n", newRunner)
+		go Runner(baton) //创建的新跑者会阻塞在runner:=<-baton，直到当前跑者执行完baton <- newRunner才会向下执行
+	}
+	// 围绕跑道跑
+	time.Sleep(100 * time.Millisecond)
+	// 比赛结束了吗？
+	if runner == 4 {
+		fmt.Printf("Runner %d Finished, Race Over\n", runner)
+		wgg.Done()
+		return
+	}
+	// 将接力棒交给下一位跑步者
+	fmt.Printf("Runner %d Exchange With Runner %d\n",
+		runner,
+		newRunner)
+	baton <- newRunner
+}
+
+var (
+	wgg sync.WaitGroup
+)
+
+func dudu(kk chan int) {
+	fmt.Printf("----当前通道元素的长度：	%d\n", len(kk))
+	time.Sleep(time.Second)
+	<-kk
 }
 
 var (
