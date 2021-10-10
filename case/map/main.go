@@ -3,10 +3,21 @@ package main
 import (
 	"github.com/wbing441282413/gotest/case/map/map01"
 	// "github.com/wbing441282413/gotest/case/struct/student"
+	"fmt"
 )
 
 //好像必须写完整，不然会报错
 func main() {
+	//map的基本使用
+	mp := make(map[string]int)
+	mp["A"] = 1
+	mp["b"] = 2
+	delete(mp, "A")
+	for name, age := range mp {
+		fmt.Println(name)
+		fmt.Println(age)
+	}
+
 	//待查询的数据：
 	//数据内容不重复
 

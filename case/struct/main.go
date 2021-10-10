@@ -2,23 +2,15 @@ package main
 
 import (
 	"fmt"
+
 	"github.com/wbing441282413/gotest/case/struct/student"
 )
 
 func main() {
-	stu := new(student.Student)
+	stu := new(student.Student) //这里还是可以引用entity包下的东西的
 	stu.Name = "王兵"
 
 	fmt.Println(stu.Name)
-
-	mp := make(map[string]int)
-	mp["A"] = 1
-	mp["b"] = 2
-	delete(mp, "A")
-	for name, age := range mp {
-		fmt.Println(name)
-		fmt.Println(age)
-	}
 
 	student.Say()
 
