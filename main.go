@@ -38,26 +38,6 @@ func Test2(s *Stu) {
 	s.name = "yang"
 }
 func main() {
-	student := new(entity.Student)
-	student.Name = "王兵"
-	fmt.Println(student.Name)
-
-	mp := make(map[string]int)
-	mp["A"] = 1
-	mp["b"] = 2
-	delete(mp, "A")
-	for name, age := range mp {
-		fmt.Println(name)
-		fmt.Println(age)
-	}
-
-	entity.Say()
-
-	fmt.Println("student:	", entity.GetName(*student))
-
-	student2 := entity.Student{1, "sdsd"}
-	entity.Swap(&student2, student) //与结构体相关的不能直接调用
-	fmt.Println("student:	", entity.GetName(*student))
 
 	var age int = 10
 	var p *int = &age
@@ -165,19 +145,6 @@ func main() {
 	sx := [][]int{{10}, {100, 200}}
 	sx[0] = append(sx[0], 20)
 	fmt.Println(sx)
-
-	//待查询的数据：
-	//数据内容不重复
-	lis := []entity.Profile{
-		{Name: "张三", Age: 23, Address: "cq"},
-		{Name: "李四", Age: 25},
-		{Name: "王五"},
-	}
-	//传统查询
-	entity.FindData(lis, "张三", 23)
-	//利用map的多键索引查询（组合键查询）
-	entity.BuildIndex(lis)     //构建基于查询的组合键（name、age)
-	entity.QueryData("张三", 23) //依据name、age进行查询（多条件）
 
 	L1 := list.New()
 	var L2 list.List
