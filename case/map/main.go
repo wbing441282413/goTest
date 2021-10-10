@@ -1,10 +1,8 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/wbing441282413/gotest/case/map/map01"
-	"github.com/wbing441282413/gotest/case/struct/student"
+	// "github.com/wbing441282413/gotest/case/struct/student"
 )
 
 //好像必须写完整，不然会报错
@@ -29,8 +27,8 @@ func main() {
 	如果要把项目分成多个模块，那每个模块都应该有自己的单独的tag，并且在引入的时候，require的时候要把tag指明
 	这样才不会出现ambiguous import的问题，可以看下https://zhuanlan.zhihu.com/p/134184461，有说到
 	*/
-	stu := new(student.Student)
-	stu.Name = "王兵"
-	fmt.Println(stu.Name)
+	// stu := new(student.Student)
+	// stu.Name = "王兵"
+	// fmt.Println(stu.Name)
 
 }
