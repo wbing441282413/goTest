@@ -1,4 +1,4 @@
-package student
+package strcut_entity
 
 import (
 	"fmt"

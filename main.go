@@ -39,23 +39,6 @@ func Test2(s *Stu) {
 }
 func main() {
 
-	var age int = 10
-	var p *int = &age
-	*p++ //对指针操作直接是对值操作
-	x := &p
-	fmt.Println(x)
-	fmt.Println(age)
-
-	//var s Stu
-	s := new(Stu)
-	pp := Stu{1, "wb"}
-	var t Stu
-	fmt.Println(reflect.TypeOf(s))
-	fmt.Println(reflect.TypeOf(t))
-	fmt.Println(reflect.TypeOf(pp))
-	var pe = &Stu{}
-	fmt.Println(reflect.TypeOf(pe))
-
 	song := entity.Song{"哈哈哈"}
 	singer := entity.Singer{3, song}
 	fmt.Println(song.GetSongName())
