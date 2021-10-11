@@ -1,4 +1,4 @@
-package entity
+package struct_entity
 
 import "fmt"
 

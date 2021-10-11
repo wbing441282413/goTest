@@ -1,4 +1,4 @@
-package entity
+package interface_entity
 
 import "fmt"
 

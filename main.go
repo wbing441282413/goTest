@@ -15,7 +15,6 @@ import (
 	"os"
 	"reflect"
 	"runtime"
-	"sort"
 	"strconv"
 	"strings"
 	"sync"
@@ -38,92 +37,6 @@ func Test2(s *Stu) {
 	s.name = "yang"
 }
 func main() {
-
-	song := entity.Song{"哈哈哈"}
-	singer := entity.Singer{3, song}
-	fmt.Println(song.GetSongName())
-	singer.Intro()
-
-	var sing entity.Sing
-	sing = singer
-	sing.Sing()
-
-	//不论是定义在哪里的接口，只要绑定了就能用
-	var tt entity.Tt
-	tt = singer
-	tt.Tt()
-	tt = song
-	tt.Tt()
-
-	if 1 == 1 && 1 == 1 {
-		fmt.Println("ccccccc")
-	}
-
-	var score int = 90
-	switch {
-	case score >= 90:
-		fmt.Println("成绩优良")
-		fallthrough
-	case score > 70 && score < 90:
-		fmt.Println("成绩合格") //如果在case后面使用fallthrough 关键字，则当前case执行完成后会继续执行下一个case，
-	case score < 60:
-		fmt.Println("成绩不及格")
-	}
-
-	var aa [3]int = [3]int{1, 2, 3}
-	cc := [...]int{1, 2}
-	var dd [2]int //默认初始是0
-	fmt.Println(reflect.TypeOf(aa))
-	fmt.Println(reflect.TypeOf(cc))
-	for _, a := range dd {
-		fmt.Println(a)
-	}
-
-	//数组
-	k := [2][2]int{{1, 1}, {2, 2}}
-	var j [2]int
-	j = k[1]
-	for _, a := range j {
-		fmt.Println(a)
-	}
-
-	var gg [2]int
-	for _, a := range gg {
-		fmt.Println(a)
-	}
-
-	//未初始化的结构体
-	var xx entity.Singer
-	fmt.Println("没初始化的结构体：", xx.Song.SongName, "count:", xx.Count)
-
-	slice := make([]int, 2, 3)
-	fmt.Println("=========切片========")
-	for _, a := range slice {
-		fmt.Println(a)
-	}
-
-	ll := []int{1, 2, 3, 4, 5}
-	l := ll[2:5]
-	for _, a := range l { //range返回的是切片元素的复制，而不是元素的引用，所以这里我们修改v的值并不会改变slice切片里的值
-		fmt.Println(a)
-	}
-
-	//切片追加
-	fmt.Println("-----------切片追加-----------")
-	sl := []int{1, 2, 3, 4, 5}
-	newSlice := sl[1:2:3]
-	newSlice = append(newSlice, sl...)
-	fmt.Println(newSlice)
-	fmt.Println(sl)
-
-	for _, a := range sl {
-		a = a + 1
-	}
-	fmt.Println(sl) //可以看到没有变
-
-	//排序切片
-	sort.Ints(newSlice)
-	fmt.Println(newSlice)
 
 	sx := [][]int{{10}, {100, 200}}
 	sx[0] = append(sx[0], 20)
@@ -169,13 +82,6 @@ func main() {
 	shu2 := [2]int{1, 2} //数组是值修改不会成功
 	swap2(shu2)
 	fmt.Println(shu2)
-
-	ii := [3]int{1, 2, 3}
-	aaa := ii[:] //运行结果看到切片并不会开辟新的内存空间
-	fmt.Println(reflect.TypeOf(ii))
-	fmt.Println(reflect.TypeOf(aaa))
-	fmt.Printf("%p \n", &ii)
-	fmt.Printf("%p \n", aaa)
 
 	//二分法
 	yy := [8]int{1, 2, 3, 4, 5, 6, 7, 8}

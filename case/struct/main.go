@@ -3,16 +3,16 @@ package main
 import (
 	"fmt"
 
-	"github.com/wbing441282413/gotest/case/struct/strcut_entity"
+	"github.com/wbing441282413/gotest/case/struct/struct_entity"
 )
 
 func main() {
-	stu := new(strcut_entity.Student) //这里还是可以引用entity包下的东西的
+	stu := new(struct_entity.Student) //这里还是可以引用entity包下的东西的
 	stu.Name = "王兵"
 
 	fmt.Println(stu.Name)
 
-	strcut_entity.Say()
+	struct_entity.Say()
 
 	// fmt.Println("student:	", student.GetName(*student))
 
@@ -30,6 +30,9 @@ func main() {
 	var pe = &Stu{}
 	fmt.Printf("%T\n", pe)
 
+	//未初始化的结构体
+	var xx struct_entity.Singer
+	fmt.Println("没初始化的结构体：", xx.Song.SongName, "count:", xx.Count)
 }
 
 type Stu struct {
