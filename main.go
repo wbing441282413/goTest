@@ -42,13 +42,6 @@ func main() {
 	sx[0] = append(sx[0], 20)
 	fmt.Println(sx)
 
-	L1 := list.New()
-	var L2 list.List
-	fmt.Println(reflect.TypeOf(L1))
-	fmt.Println(reflect.TypeOf(L2))
-	fmt.Println(L1)
-	fmt.Println(L2)
-
 	//循环
 	//for i:=1 ; i<=9;i++{
 	//	for j:=1 ; j<=i;j++{
