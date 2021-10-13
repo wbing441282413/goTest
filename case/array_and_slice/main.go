@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"sort"
+
+	"github.com/wbing441282413/gotest/case/array_and_slice/utils"
 )
 
 func main() {
@@ -107,16 +109,69 @@ func main() {
 	fmt.Printf("%p\n", newSlice) //可以看到地址不一样了，是新建了一个底层数组的
 	//这里比较newSlice地址和sxl就行了，和比较底层数组是一样的
 
-	newSlice = append(newSlice, sl...)
+	fmt.Println("------------------切片append演示---------------")
+	var xs []int
+	for i := 0; i < 10; i++ {
+		xs = append(xs, i)
+		fmt.Printf("%d 切片容量:cap=%d\t%v	%p	\n", i, cap(xs), xs, xs)
+	} //可以看到每次超过奇葩的容量的时候就会进行扩容，每次新建的数组是原来的2倍（在1000以下的时候是这样的）
+
+	//切片的拷贝
+	fmt.Println("------------------切片拷贝---------------")
 	fmt.Println(newSlice)
 	fmt.Println(sl)
+	fmt.Printf("%p\n", newSlice)
+	newSlice = append(newSlice, sl...) //直接把切片sl拷贝到切片newSlice上
+	fmt.Println(newSlice)
+	fmt.Println(sl)
+	fmt.Printf("%p\n", newSlice) //由于slice的容量不够了，可以看到拷贝时是新建了数组的
 
-	for _, a := range sl {
-		a = a + 1
-	}
-	fmt.Println(sl) //可以看到没有变
+	fmt.Println("===二维切片的拷贝===")
+	sx := [][]int{{10}, {100, 200}}
+	sx[0] = append(sx[0], 20) //20被追加到二维切片sx的第一维的切片后
+	fmt.Println(sx)
 
+	fmt.Println("------------------切片排序---------------")
 	//排序切片
 	sort.Ints(newSlice)
 	fmt.Println(newSlice)
+
+	fmt.Println("------------------go中的数组不是引用---------------")
+	shu := []int{1, 2} //切片是指针，所以修改能成功
+	swap(shu)
+	fmt.Println(shu)
+
+	shu2 := [2]int{1, 2} //数组是值修改不会成功
+	swap2(shu2)
+	fmt.Println(shu2)
+
+	fmt.Println("------------------没有初始化的切片---------------")
+	var ggx []int
+	if ggx == nil {
+		fmt.Println("没初始化的切片默认是nil")
+		fmt.Println(len(ggx))
+		fmt.Println(cap(ggx))
+	}
+
+	fmt.Println("------------------切片的翻转---------------")
+	bb := []int{1, 2, 3, 4, 5}
+	utils.Reverse(bb[1:4])
+	fmt.Println(bb)
+
+	uy := make([]utils.Song, 10) //创建一个结构体切片
+	uy[1].SongName = "Sd"
+	uy[1].Count = 1
+	fmt.Printf("-----%v", uy)
+}
+
+func swap(a []int) { //切片交换
+	tmp := a[0]
+	a[0] = a[1]
+	a[1] = tmp
+}
+
+func swap2(a [2]int) { //数组交换
+	tmp := a[0]
+	a[0] = a[1]
+	a[1] = tmp
 }

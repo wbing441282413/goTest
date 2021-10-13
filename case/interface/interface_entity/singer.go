@@ -7,7 +7,7 @@ type Singer struct {
 	Song  Song
 }
 
-func (s Singer) Sing() {
+func (s Singer) Sing() { //实现了Sing接口
 	fmt.Println(s.Song.SongName)
 }
 

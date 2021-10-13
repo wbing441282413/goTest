@@ -42,4 +42,7 @@ func main() {
 	// stu.Name = "王兵"
 	// fmt.Println(stu.Name)
 
+	fmt.Println("----------------map---比较相等-------------------")
+	fmt.Println(map01.Equal(map[string]int{"A": 0}, map[string]int{"B": 1}))
+
 }

@@ -48,3 +48,15 @@ func FindData(list []Profile, name string, age int) {
 	}
 	fmt.Println("没有找到对应的数据")
 }
+
+func Equal(x, y map[string]int) bool { //比较map是否相等
+	if len(x) != len(y) {
+		return false
+	}
+	for k, xv := range x {
+		if yv, ok := y[k]; !ok || yv != xv { //因为找不到key时map也会返回0，所以不仅仅是比值，还要看一下key存不存在
+			return false
+		}
+	}
+	return true
+}
