@@ -3,7 +3,6 @@ package main
 //--
 import (
 	"bufio"
-	"container/list"
 	"encoding/json"
 	"fmt"
 	"go/types"
@@ -13,7 +12,6 @@ import (
 	"log"
 	"math/rand"
 	"os"
-	"reflect"
 	"runtime"
 	"strconv"
 	"strings"
@@ -38,118 +36,12 @@ func Test2(s *Stu) {
 }
 func main() {
 
-	sx := [][]int{{10}, {100, 200}}
-	sx[0] = append(sx[0], 20)
-	fmt.Println(sx)
-
-	//循环
-	//for i:=1 ; i<=9;i++{
-	//	for j:=1 ; j<=i;j++{
-	//		fmt.Printf("%dX%d=%d	",j,i,j*i)
-	//	}
-	//	fmt.Println()
-	//}
-
-	//ss:= "sdsd"
-	//for _ ,e:= range ss{
-	//	fmt.Printf("%c ",e)
-	//}
-	//zx := make(map[string]int)
-	//zx["w"] = 1
-	//zx["c"] = 2
-	//for k,v := range zx{
-	//	fmt.Println(k,v)
-	//}
-	//Switch
-	//var ax = 1
-	//switch ax{
-	//	case 1,2:
-	//		fmt.Println("xxxxxx")
-	//	case 3:
-	//		fmt.Println("ccccc")
-	//}
-	shu := []int{1, 2} //切片是指针，所以修改能成功
-	swap(shu)
-	fmt.Println(shu)
-
-	shu2 := [2]int{1, 2} //数组是值修改不会成功
-	swap2(shu2)
-	fmt.Println(shu2)
-
 	//二分法
 	yy := [8]int{1, 2, 3, 4, 5, 6, 7, 8}
 	fmt.Println(utils.BinarySearch(yy[:], 0, 7, 8))
 	fmt.Println(utils.BinarySearchRecursion(yy[:], 0, 7, 8))
 
-	//类似于Java中的匿名函数
-	utils.ToSay(func() {
-		fmt.Println("我在帮别人说话")
-	})
-
-	mpp := make(map[interface{}]interface{})
-	mpp["sd"] = "Sda"
-	mpp[1] = "Sd"
-	mpp[2] = 1
-	fmt.Println(mpp)
-	fmt.Printf("%T", mpp["sd"])
-	fmt.Printf("%T", mpp[1])
-	fmt.Printf("%T \n", mpp[2])
-
-	vv, kkk := mpp["sd"].(int) //空接口断言，不是int则kkk为false
-	if kkk {
-		fmt.Println(vv)
-	}
-
-	var pxp = new(entity.Phone) //结构指针
-	pxp.Name = "小米"
-	var us entity.Usber
-	us = pxp
-	us.Start() //也可以
-
-	m1 := &entity.Phone{Name: "xx"}
-	m2 := new(entity.Phone)
-	fmt.Println(reflect.TypeOf(m1))
-	fmt.Println(reflect.TypeOf(m2))
-
-	months := [...]string{1: "January", 12: "December"} //数组
-	//summer := months[3:5]//summer长度是2
-	//fmt.Println(summer[3])//切片越界
-	fmt.Println(len(months))
-
-	bb := []int{1, 2, 3, 4, 5}
-	utils.Reverse(bb[1:4])
-	fmt.Println(bb)
-
-	var ggx []int
-	if ggx == nil {
-		fmt.Println("没初始化的slice默认是nil")
-		fmt.Println(len(ggx))
-		fmt.Println(cap(ggx))
-	}
-
 	//utils.NoDo()
-
-	//append的演示
-	var xs []int
-	for i := 0; i < 10; i++ {
-		xs = append(xs, i)
-		fmt.Printf("%d cap=%d\t%v\n", i, cap(xs), xs)
-	}
-
-	so := []string{"sd", "sd", "ss", "ss", "xx"}
-	//utils.DeleteMultiChar(so)
-	fmt.Println(so)
-
-	sss, hhh := "sd", "sd"
-	if sss == hhh {
-		fmt.Println("判断字符串相等可以用==")
-	}
-
-	fmt.Println(utils.Equal(map[string]int{"A": 0}, map[string]int{"B": 1}))
-
-	var sy string
-	sy = fmt.Sprintf("%q", so)
-	fmt.Println(sy)
 
 	maa := make(map[int]string)
 	maa[1] = "uuu"
@@ -189,12 +81,6 @@ func main() {
 		log.Fatalf("JSON unmarshaling failed: %s", err)
 	}
 	fmt.Println(ree)
-
-	//uy := new([]entity.Song)
-	uy := make([]entity.Song, 10)
-	uy[1].SongName = "Sd"
-	fmt.Println("-----", reflect.TypeOf(uy))
-	fmt.Println("-----", uy)
 
 	//inEOF()
 	fmt.Println(runtime.GOARCH)  //CPU型号
@@ -264,10 +150,6 @@ func main() {
 	var xxa = gh
 	xxa.HH()
 
-	//时间相关
-	var currentTime time.Time = time.Now()
-	fmt.Println(currentTime)
-
 	var yu interface{}
 	if yu == nil {
 		fmt.Println("空接口等于nil")
@@ -279,8 +161,6 @@ func main() {
 	default:
 		fmt.Println("unknown type")
 	}
-	entity.TimeSomething()
-
 	//fp := "D:\\Backup\\Documents\\草稿.txt"
 	//ddda, err := entity.ReadFileByFilePath(fp)//小文件一次性读出
 	//fmt.Printf("%s\n",ddda)
