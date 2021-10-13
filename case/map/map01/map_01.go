@@ -60,3 +60,8 @@ func Equal(x, y map[string]int) bool { //比较map是否相等
 	}
 	return true
 }
+
+func ChangeMap(m map[int]string) map[int]string {
+	m[1] = "ggg"
+	return m
+}

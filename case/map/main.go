@@ -45,4 +45,9 @@ func main() {
 	fmt.Println("----------------map---比较相等-------------------")
 	fmt.Println(map01.Equal(map[string]int{"A": 0}, map[string]int{"B": 1}))
 
+	fmt.Println("----------------map是指针-------------------")
+	maa := make(map[int]string)
+	maa[1] = "uuu"
+	map01.ChangeMap(maa) //这个方法要传入的是一个map类型，而发现传入的map值是真的被改变了可见是个指针
+	fmt.Println(maa)
 }

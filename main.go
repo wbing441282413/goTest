@@ -5,7 +5,6 @@ import (
 	"bufio"
 	"encoding/json"
 	"fmt"
-	"go/types"
 	"gotest/entity"
 	"gotest/utils"
 	"io"
@@ -42,11 +41,6 @@ func main() {
 	fmt.Println(utils.BinarySearchRecursion(yy[:], 0, 7, 8))
 
 	//utils.NoDo()
-
-	maa := make(map[int]string)
-	maa[1] = "uuu"
-	utils.ChangeMap(maa)
-	fmt.Println(maa) //可见是指针类型的
 
 	//json,多个结构体实体
 	var movies = []entity.Movie{
@@ -118,49 +112,11 @@ func main() {
 	fmt.Println(f2())
 	fmt.Println(f3())
 
-	p11 := entity.ColorPoint{&entity.Point{2, 2}, "red"}
-	p22 := entity.ColorPoint{&entity.Point{1, 1}, "yellow"}
-	fmt.Printf("%p\n", &p11)
-	fmt.Printf("%p\n", &p22)
-	fmt.Printf("%p\n", p11.Point)
-	fmt.Printf("%p\n", p22.Point)
-	p11.Point = p22.Point //此时的p11的point指向的是p22的point地址
-	fmt.Println("--把成员point赋值给对方后---")
-	fmt.Printf("%p\n", &p11)
-	fmt.Printf("%p\n", &p22)
-	fmt.Printf("%p\n", p11.Point)
-	fmt.Printf("%p\n", p22.Point) //可以看到成员的地址变一样了
-	//fmt.Println(&p22.Point)//指针不应该加&取址，值才要取址
-
 	//add 和 ADD 的底层类型相同，并且 add 是字面量类型
 	//所以 add 可直接赋值给 ADD 类型的变量 g
 	var g entity.ADD = entity.Adds
 	fmt.Println(g(1, 2))
 
-	//不一定要一个类型全部实现接口的所有方法，可以提过内嵌其他按类型，让其他类型实现的也可以为我所用
-	AF := new(entity.Aa)
-	var sssd entity.Service = AF
-	sssd.Start()
-	sssd.Stop()
-	var xxxd entity.Habe = AF
-	xxxd.Show()
-
-	//自己和内嵌都实现了接口会调用哪个
-	gh := new(entity.YY)
-	var xxa = gh
-	xxa.HH()
-
-	var yu interface{}
-	if yu == nil {
-		fmt.Println("空接口等于nil")
-	}
-
-	switch yu.(type) {
-	case types.Nil:
-		fmt.Println("空接口类型是Nil")
-	default:
-		fmt.Println("unknown type")
-	}
 	//fp := "D:\\Backup\\Documents\\草稿.txt"
 	//ddda, err := entity.ReadFileByFilePath(fp)//小文件一次性读出
 	//fmt.Printf("%s\n",ddda)
