@@ -14,7 +14,7 @@ func main() {
 	switch {
 	case score >= 90:
 		fmt.Println("成绩优良")
-		fallthrough
+		fallthrough //这个关键字，不会判断后面的case是否true，强行执行下一个case
 	case score > 70 && score < 90:
 		fmt.Println("成绩合格") //如果在case后面使用fallthrough 关键字，则当前case执行完成后会继续执行下一个case，
 	case score < 60:

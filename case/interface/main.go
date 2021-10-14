@@ -78,4 +78,36 @@ func main() {
 	var xxa = gh
 	xxa.HH()
 
+	fmt.Println("--------------------一个类型实现了多个接口-----类型断言-----------------------------------")
+
+	//一个类型实现了多个接口的话，那他就可以是多个接口类型的
+	animals := map[string]interface{}{
+		"bird": new(interface_entity.Bird),
+		"dog":  new(interface_entity.Dog),
+	}
+	for name, obj := range animals { //name对象名
+		fmt.Printf("%T\n", obj)
+		fmt.Println()
+
+		switch obj.(type) { //inteface.(type)判断某个 interface 变量中实际存储的变量类型
+		case interface_entity.Walk:
+			fmt.Println("Walk")
+		case interface_entity.Fly:
+			fmt.Println("Fly")
+		}
+
+		flyer, isFlyer := obj.(interface_entity.Fly) //类型断言，返回的是一个对应类型的变量
+		walker, isWalker := obj.(interface_entity.Walk)
+		fmt.Printf("name:	%s,	type:	%T,	isFlyer:	%v\n", name, flyer, isFlyer)
+		fmt.Printf("name:	%s,	type:	%T,	isWalker:	%v\n", name, walker, isWalker)
+	}
+
+	//只有接口类型才能进行断言,比如下面会报错， 因为bird不是interface变量，只有接口类型变量能进行度断言
+	// bird := new(interface_entity.Bird)
+	// val, ok :=  bird.(interface_entity.Bird)
+
+	//Switch结合类型断言
+	interface_entity.Pay(new(interface_entity.AliPay))
+	interface_entity.Pay(new(interface_entity.WeChatPay))
+
 }
