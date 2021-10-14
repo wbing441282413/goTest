@@ -3,12 +3,10 @@ package main
 //--
 import (
 	"bufio"
-	"encoding/json"
 	"fmt"
 	"gotest/entity"
 	"gotest/utils"
 	"io"
-	"log"
 	"math/rand"
 	"os"
 	"runtime"
@@ -41,40 +39,6 @@ func main() {
 	fmt.Println(utils.BinarySearchRecursion(yy[:], 0, 7, 8))
 
 	//utils.NoDo()
-
-	//json,多个结构体实体
-	var movies = []entity.Movie{
-		{Title: "Casablanca", Year: 1942, Color: false,
-			Actors: []string{"Humphrey Bogart", "Ingrid Bergman"}},
-		{Title: "Cool Hand Luke", Year: 1967, Color: true,
-			Actors: []string{"Paul Newman"}},
-		{Title: "Bullitt", Year: 1968, Color: true,
-			Actors: []string{"Steve McQueen", "Jacqueline Bisset"}},
-	}
-	data, err := json.MarshalIndent(movies, "", "	")
-	if err != nil {
-		log.Fatalf("JSON marshaling failed: %s", err)
-	}
-	fmt.Printf("%s\n", data)
-	fmt.Printf("%T\n", data)
-	//解码
-	var movies2 []entity.Movie
-	if err = json.Unmarshal(data, &movies2); err != nil {
-		log.Fatalf("JSON unmarshaling failed: %s", err)
-	}
-	fmt.Println(movies2)
-
-	var actors []struct{ Actors []string }
-	if err = json.Unmarshal(data, &actors); err != nil {
-		log.Fatalf("JSON unmarshaling failed: %s", err)
-	}
-	fmt.Println(actors)
-
-	var ree []struct{ released string }
-	if err = json.Unmarshal(data, &ree); err != nil {
-		log.Fatalf("JSON unmarshaling failed: %s", err)
-	}
-	fmt.Println(ree)
 
 	//inEOF()
 	fmt.Println(runtime.GOARCH)  //CPU型号
@@ -126,22 +90,6 @@ func main() {
 	//fmt.Println(reflect.TypeOf(entity.Yuu))
 	//entity.YYY(entity.XXC)//函数签名和函数类型的不一样时是不能转换的
 	entity.HJ(entity.YYY(entity.Yuu))
-
-	//Switch结合类型断言
-	entity.Pay(new(entity.AliPay))
-	entity.Pay(new(entity.WeChatPay))
-
-	//一个类型实现了多个接口的话，那他就可以是多个接口类型的
-	animals := map[string]interface{}{
-		"bird": new(entity.Bird),
-		"dog":  new(entity.Dog),
-	}
-	for name, obj := range animals {
-		flyer, isFlyer := obj.(entity.Fly)
-		walker, isWalker := obj.(entity.Walk)
-		fmt.Printf("name:	%s,type:	%T,isFlyer:	%v\n", name, flyer, isFlyer)
-		fmt.Printf("name:	%s,type:	%T,isWalker:	%v\n", name, walker, isWalker)
-	}
 
 	//自定义error接口的实现类来实现自定义异常
 	sqrt, err := entity.Sqrt(-13.23)
