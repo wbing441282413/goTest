@@ -52,10 +52,10 @@ func main() {
 	fmt.Printf("是否是同一个结构体？ %v\n", &t2 == &t1)
 
 	/**
-	反射其实是对interface的操作，interface是由有个（value， type）对组成的
-	反射就是操作这个，
-	reflect的reflect.Type和reflect.value两个对应的就是interface的（type，value），也叫反射对象
-	转换通过valueof和typeof实现
+	  反射其实是对interface的操作，interface是由有个（value， type）对组成的
+	  反射就是操作这个，
+	  reflect的reflect.Type和reflect.value两个对应的就是interface的（type，value），也叫反射对象
+	  转换通过valueof和typeof实现
 
 	*/
 	fmt.Println("-------------------------第一定律：反射可以把interface对象转为反射对象--------------------------------------------------------")
@@ -69,7 +69,7 @@ func main() {
 	fmt.Printf("%v \n", typee)
 
 	fmt.Println("-------------------------第二定律：反射可以把反射对象转为interface对象--------------------------------------------------------")
-	// 反射对象转interface
+	// 反射对象转interfacecon
 	xi := valuee.Interface() // 反射对象才有这方法
 	fmt.Printf("%v \n", xi)
 	fmt.Printf("%T \n", xi)
